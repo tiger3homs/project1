@@ -3,11 +3,13 @@ import emailjs from 'emailjs-com';
 import { Home, Book, Mail, Menu, X, ArrowRight, Phone, MapPin, Clock, Facebook, Instagram, Twitter, Youtube, Moon, Sun } from 'lucide-react';
 import translations from './translations';
 
+type Language = 'en' | 'sv' | 'ar';
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
-  const [language, setLanguage] = React.useState('en');
+  const [language, setLanguage] = React.useState<Language>('en');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,13 +39,13 @@ function App() {
   };
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLanguage(e.target.value);
+    setLanguage(e.target.value as Language);
   };
 
   const t = React.useMemo(() => translations[language], [language]);
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} ${language === 'ar' ? 'rtl' : ''}`}>
       {/* Navigation */}
       <nav className={`shadow-sm ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +64,11 @@ function App() {
             </div>
 
             {/* Language Selector */}
-            <select onChange={handleLanguageChange} value={language} className="text-gray-700 hover:text-blue-600">
+            <select 
+              onChange={handleLanguageChange} 
+              value={language} 
+              className={`text-gray-700 hover:text-blue-600 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
+            >
               <option value="en">English</option>
               <option value="sv">Svenska</option>
               <option value="ar">العربية</option>
@@ -108,11 +114,11 @@ function App() {
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
-                  <span className="block">Transform Your</span>
-                  <span className={`block ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>Digital Presence</span>
+                  <span className="block">{t.heroTitlePart1}</span>
+                  <span className={`block ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.heroTitlePart2}</span>
                 </h1>
                 <p className="mt-3 text-base sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  We help businesses grow by creating exceptional digital experiences that connect with their audience.
+                  {t.heroDescription}
                 </p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
@@ -148,27 +154,13 @@ function App() {
 
           <div className="mt-10">
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  title: t.digitalStrategy,
-                  description: "Build a roadmap for your digital success with our comprehensive strategy services.",
-                  icon: <Book className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
-                },
-                {
-                  title: t.support,
-                  description: "Round-the-clock support to ensure your business never misses a beat.",
-                  icon: <Clock className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
-                },
-                {
-                  title: t.globalReach,
-                  description: "Connect with customers worldwide through our international network.",
-                  icon: <MapPin className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
-                }
-              ].map((feature, index) => (
+              {t.features.map((feature, index) => (
                 <div key={index} className={`relative p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}>
                   <div>
                     <div className={`absolute h-12 w-12 flex items-center justify-center rounded-md ${isDarkMode ? 'bg-blue-900' : 'bg-blue-50'}`}>
-                      {feature.icon}
+                      {index === 0 && <Book className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />}
+                      {index === 1 && <Clock className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />}
+                      {index === 2 && <MapPin className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />}
                     </div>
                     <p className="ml-16 text-lg leading-6 font-medium">{feature.title}</p>
                   </div>

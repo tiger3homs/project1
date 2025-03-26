@@ -23,7 +23,24 @@ const translations = {
     contactInfo: "Contact Info",
     phone: "+1 (555) 123-4567",
     address: "123 Business St, Suite 100",
-    footer: "&copy; 2025. Built and designed by Tiger3homs."
+    footer: "&copy; 2025. Built and designed by Tiger3homs.",
+    heroTitlePart1: "Transform Your",
+    heroTitlePart2: "Digital Presence",
+    heroDescription: "We help businesses grow by creating exceptional digital experiences that connect with their audience.",
+    features: [
+      {
+        title: "Digital Strategy",
+        description: "Build a roadmap for your digital success with our comprehensive strategy services."
+      },
+      {
+        title: "24/7 Support",
+        description: "Round-the-clock support to ensure your business never misses a beat."
+      },
+      {
+        title: "Global Reach",
+        description: "Connect with customers worldwide through our international network."
+      }
+    ]
   },
   sv: {
     home: "Hem",
@@ -49,7 +66,24 @@ const translations = {
     contactInfo: "Kontaktinformation",
     phone: "+1 (555) 123-4567",
     address: "123 Business St, Suite 100",
-    footer: "&copy; 2025. Byggd och designad av Tiger3homs."
+    footer: "&copy; 2025. Byggd och designad av Tiger3homs.",
+    heroTitlePart1: "Förvandla din",
+    heroTitlePart2: "Digitala närvaro",
+    heroDescription: "Vi hjälper företag att växa genom att skapa exceptionella digitala upplevelser som ansluter till deras publik.",
+    features: [
+      {
+        title: "Digital strategi",
+        description: "Bygg en färdplan för din digitala framgång med våra omfattande strategitjänster."
+      },
+      {
+        title: "24/7 Support",
+        description: "Support dygnet runt för att säkerställa att ditt företag aldrig missar ett slag."
+      },
+      {
+        title: "Global räckvidd",
+        description: "Anslut med kunder över hela världen genom vårt internationella nätverk."
+      }
+    ]
   },
   ar: {
     home: "الرئيسية",
@@ -75,7 +109,24 @@ const translations = {
     contactInfo: "معلومات الاتصال",
     phone: "+1 (555) 123-4567",
     address: "123 Business St, Suite 100",
-    footer: "&copy; 2025. تم البناء والتصميم بواسطة Tiger3homs."
+    footer: "&copy; 2025. تم البناء والتصميم بواسطة Tiger3homs.",
+    heroTitlePart1: "حول",
+    heroTitlePart2: "وجودك الرقمي",
+    heroDescription: "نساعد الشركات على النمو من خلال إنشاء تجارب رقمية استثنائية تتواصل مع جمهورها.",
+    features: [
+      {
+        title: "استراتيجية رقمية",
+        description: "قم ببناء خارطة طريق لنجاحك الرقمي من خلال خدماتنا الاستراتيجية الشاملة."
+      },
+      {
+        title: "دعم 24/7",
+        description: "دعم على مدار الساعة لضمان عدم تفويت عملك لأي نبضة."
+      },
+      {
+        title: "الوصول العالمي",
+        description: "تواصل مع العملاء في جميع أنحاء العالم من خلال شبكتنا الدولية."
+      }
+    ]
   }
 };
 
