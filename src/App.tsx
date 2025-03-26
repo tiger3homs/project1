@@ -192,7 +192,7 @@ function App() {
               <a href="https://facebook.com/" className={`hover:text-blue-400 transition-colors ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                 <Facebook size={24} />
               </a>
-              <a href="https://instagram.com/.s" className={`hover:text-blue-400 transition-colors ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <a href="https://instagram.com/" className={`hover:text-blue-400 transition-colors ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                 <Instagram size={24} />
               </a>
             </div>
