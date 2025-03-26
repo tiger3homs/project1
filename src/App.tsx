@@ -4,6 +4,18 @@ import { Home, Book, Mail, Menu, X, ArrowRight, Phone, MapPin, Clock, Facebook, 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form Data:', formData);
+    // Here you can add code to send the form data to a server or an email service
+  };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
@@ -183,7 +195,7 @@ function App() {
             </p>
           </div>
           <div className="mt-12">
-            <form className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+            <form className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium">
                   Name
@@ -193,6 +205,8 @@ function App() {
                     type="text"
                     name="name"
                     id="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className={`py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
                   />
                 </div>
@@ -206,6 +220,8 @@ function App() {
                     type="email"
                     name="email"
                     id="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className={`py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
                   />
                 </div>
@@ -219,6 +235,8 @@ function App() {
                     id="message"
                     name="message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
                     className={`py-3 px-4 block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
                   ></textarea>
                 </div>
