@@ -1,11 +1,13 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
 import { Home, Book, Mail, Menu, X, ArrowRight, Phone, MapPin, Clock, Facebook, Instagram, Twitter, Youtube, Moon, Sun } from 'lucide-react';
+import translations from './translations';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
+  const [language, setLanguage] = React.useState('en');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -20,8 +22,8 @@ function App() {
       from_email: formData.email,
       message: formData.message,
       to_email: 'tiger3homs@gmail.com',
-      name: formData.name, // Add this line
-      email: formData.email // Add this line
+      name: formData.name,
+      email: formData.email
     };
 
     emailjs.send('service_bdj14o3', 'template_2e2nikq', templateParams, 'UBLU57PsLej7OB6PR')
@@ -33,6 +35,12 @@ function App() {
         alert('Failed to send message. Please try again later.');
       });
   };
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value);
+  };
+
+  const t = React.useMemo(() => translations[language], [language]);
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
@@ -47,11 +55,18 @@ function App() {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Home</a>
-              <a href="#services" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Services</a>
-              <a href="#about" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>About</a>
-              <a href="#contact" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Contact</a>
+              <a href="#home" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.home}</a>
+              <a href="#services" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.services}</a>
+              <a href="#about" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.about}</a>
+              <a href="#contact" className={`hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.contact}</a>
             </div>
+
+            {/* Language Selector */}
+            <select onChange={handleLanguageChange} value={language} className="text-gray-700 hover:text-blue-600">
+              <option value="en">English</option>
+              <option value="sv">Svenska</option>
+              <option value="ar">العربية</option>
+            </select>
 
             {/* Dark Mode Toggle */}
             <button
@@ -77,10 +92,10 @@ function App() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <a href="#home" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Home</a>
-              <a href="#services" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Services</a>
-              <a href="#about" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>About</a>
-              <a href="#contact" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Contact</a>
+              <a href="#home" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.home}</a>
+              <a href="#services" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.services}</a>
+              <a href="#about" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.about}</a>
+              <a href="#contact" className={`block px-3 py-2 hover:text-blue-600 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{t.contact}</a>
             </div>
           </div>
         )}
@@ -102,7 +117,7 @@ function App() {
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
                     <a href="#contact" className={`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white ${isDarkMode ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'} md:py-4 md:text-lg md:px-10`}>
-                      Get Started
+                      {t.getStarted}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </a>
                   </div>
@@ -116,6 +131,7 @@ function App() {
             className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
             src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
             alt="Team working"
+            loading="lazy"
           />
         </div>
       </div>
@@ -124,9 +140,9 @@ function App() {
       <div id="services" className={`py-12 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className={`text-base font-semibold tracking-wide uppercase ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>Our Services</h2>
+            <h2 className={`text-base font-semibold tracking-wide uppercase ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.ourServices}</h2>
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">
-              Everything you need to succeed
+              {t.everythingYouNeed}
             </p>
           </div>
 
@@ -134,17 +150,17 @@ function App() {
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  title: "Digital Strategy",
+                  title: t.digitalStrategy,
                   description: "Build a roadmap for your digital success with our comprehensive strategy services.",
                   icon: <Book className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
                 },
                 {
-                  title: "24/7 Support",
+                  title: t.support,
                   description: "Round-the-clock support to ensure your business never misses a beat.",
                   icon: <Clock className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
                 },
                 {
-                  title: "Global Reach",
+                  title: t.globalReach,
                   description: "Connect with customers worldwide through our international network.",
                   icon: <MapPin className={`h-6 w-6 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
                 }
@@ -170,17 +186,17 @@ function App() {
       <div id="about" className={`py-12 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className={`text-base font-semibold tracking-wide uppercase ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>About us</h2>
+            <h2 className={`text-base font-semibold tracking-wide uppercase ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.aboutUs}</h2>
           </div>
           <p className="mt-3 text-base sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-            We are a creative web design company specializing in crafting custom, user-friendly websites. From responsive design and e-commerce solutions to SEO and graphic design, we help your business stand out online and deliver an exceptional user experience.
+            {t.aboutDescription}
           </p>
         </div>
 
         <div className={`py-12 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:text-center">
-              <h2 className={`text-base font-semibold tracking-wide uppercase h-12 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>Links</h2>
+              <h2 className={`text-base font-semibold tracking-wide uppercase h-12 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>{t.links}</h2>
             </div>
             <div className="flex justify-center space-x-6">
               <a href="https://x.com/" className={`hover:text-blue-400 transition-colors ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -205,17 +221,17 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold sm:text-4xl">
-              Contact Us
+              {t.contactUs}
             </h2>
             <p className="mt-4 text-lg">
-              Get in touch with our team to learn more about how we can help you succeed.
+              {t.contactDescription}
             </p>
           </div>
           <div className="mt-12">
             <form className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium">
-                  Name
+                  {t.name}
                 </label>
                 <div className="mt-1">
                   <input
@@ -230,7 +246,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium">
-                  Email
+                  {t.email}
                 </label>
                 <div className="mt-1">
                   <input
@@ -245,7 +261,7 @@ function App() {
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="message" className="block text-sm font-medium">
-                  Message
+                  {t.message}
                 </label>
                 <div className="mt-1">
                   <textarea
@@ -263,7 +279,7 @@ function App() {
                   type="submit"
                   className={`w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white ${isDarkMode ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                 >
-                  Send Message
+                  {t.sendMessage}
                   <Mail className="ml-2 h-5 w-5" />
                 </button>
               </div>
@@ -286,20 +302,20 @@ function App() {
               </p>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+              <h3 className="text-white font-semibold mb-4">{t.quickLinks}</h3>
               <ul className="space-y-2">
-                <li><a href="#home" className="text-gray-400 hover:text-white">Home</a></li>
-                <li><a href="#services" className="text-gray-400 hover:text-white">Services</a></li>
-                <li><a href="#about" className="text-gray-400 hover:text-white">About</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-white">Contact</a></li>
+                <li><a href="#home" className="text-gray-400 hover:text-white">{t.home}</a></li>
+                <li><a href="#services" className="text-gray-400 hover:text-white">{t.services}</a></li>
+                <li><a href="#about" className="text-gray-400 hover:text-white">{t.about}</a></li>
+                <li><a href="#contact" className="text-gray-400 hover:text-white">{t.contact}</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-white font-semibold mb-4">Contact Info</h3>
+              <h3 className="text-white font-semibold mb-4">{t.contactInfo}</h3>
               <ul className="space-y-2">
                 <li className="flex items-center text-gray-400">
                   <Phone className="h-5 w-5 mr-2" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>{t.phone}</span>
                 </li>
                 <li className="flex items-center text-gray-400">
                   <Mail className="h-5 w-5 mr-2" /><a href="mailto:tiger3homs@gmail.com" className="hover:text-blue-400 transition-colors">
@@ -308,13 +324,13 @@ function App() {
                 </li>
                 <li className="flex items-center text-gray-400">
                   <MapPin className="h-5 w-5 mr-2" />
-                  <span>123 Business St, Suite 100</span>
+                  <span>{t.address}</span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-            <p className="text-gray-400">&copy; 2025. Built and designed by Tiger3homs.</p>
+            <p className="text-gray-400">{t.footer}</p>
           </div>
         </div>
       </footer>
