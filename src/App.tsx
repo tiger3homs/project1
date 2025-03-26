@@ -1,4 +1,5 @@
 import React from 'react';
+import emailjs from 'emailjs-com';
 import { Home, Book, Mail, Menu, X, ArrowRight, Phone, MapPin, Clock, Facebook, Instagram, Twitter, Youtube, Moon, Sun } from 'lucide-react';
 
 function App() {
@@ -13,8 +14,24 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-    // Here you can add code to send the form data to a server or an email service
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      to_email: 'tiger3homs@gmail.com',
+      name: formData.name, // Add this line
+      email: formData.email // Add this line
+    };
+
+    emailjs.send('service_bdj14o3', 'template_2e2nikq', templateParams, 'UBLU57PsLej7OB6PR')
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Message sent successfully!');
+      }, (error) => {
+        console.log('FAILED...', error);
+        alert('Failed to send message. Please try again later.');
+      });
   };
 
   return (
