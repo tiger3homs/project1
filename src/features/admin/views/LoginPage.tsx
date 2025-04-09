@@ -40,7 +40,8 @@ const LoginPage: React.FC = () => {
     if (!auth) return; // Check if auth is not null
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigate('/admin/dashboard', { replace: true });
+        // Redirect to the base admin path, let AdminDashboard handle default view
+        navigate('/admin', { replace: true });
       }
     });
     return () => unsubscribe();

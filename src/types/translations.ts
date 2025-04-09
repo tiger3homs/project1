@@ -9,7 +9,13 @@ interface EnglishTranslations {
     siteTitle: string;
     siteRole: string;
     logoUrl: string;
-    footerText: string;
+    // footerText is likely part of the footer now, removing from generalInfo
+  };
+  hero: { // Updated Hero section type
+    title: string;
+    title2?: string; // Make title2 optional as it might not exist in other languages
+    subtitle: string;
+    ctaButtonText?: string; // Make ctaButtonText optional
   };
   about: {
     title: string;
@@ -29,6 +35,10 @@ interface EnglishTranslations {
   services: {
       title: string;
       list: ServiceItem[];
+  };
+  footer: { // Added Footer section type
+    copyright: string;
+    // Add other footer fields as needed, e.g., links array, social media info
   };
 }
 

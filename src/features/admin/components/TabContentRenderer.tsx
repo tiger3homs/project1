@@ -4,7 +4,6 @@ import { Eye, MessageSquare, FileText, Star } from 'lucide-react';
 // Import Tab Components
 import ProjectsSection from '../sections/Projects/ProjectsSection';
 import ServicesSection from '../sections/Services/ServicesSection';
-import StyleEditorSection from '../sections/StyleEditor/StyleEditorSection';
 import SocialLinksSection from '../sections/SocialLinks/SocialLinksSection';
 import GeneralInfoSection from '../sections/GeneralInfo/GeneralInfoSection';
 import PagesSection from '../sections/Pages/PagesSection';
@@ -104,9 +103,6 @@ const TabContentRenderer: React.FC<TabContentRendererProps> = ({
   }
 
   // Corrected conditional rendering structure
-  if (activeTab === 'styleEditor') {
-    return <StyleEditorSection />;
-  }
   if (activeTab === 'socialLinks') {
     return <SocialLinksSection />;
   }

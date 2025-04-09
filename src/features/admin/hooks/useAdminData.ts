@@ -131,9 +131,14 @@ export const useAdminData = () => {
     // Note: Switching activeTab is handled in the component
   }, []); // Removed dependencies like activeTab, setActiveTab
 
-  // Modified saveChanges to accept data payload
-  const saveChanges = async (dataToSave?: TranslationsType['en']) => {
-    const data = dataToSave || translations.en; // Use provided data or current state
+  // Modified saveChanges to accept options for saving defaults or specific data
+  const saveChanges = async (options?: { dataToSave?: TranslationsType['en'], useDefaults?: boolean }) => {
+    // Determine data source: options.dataToSave > defaultTranslations.en (if useDefaults) > current state (translations.en)
+    const data = options?.dataToSave
+                 ? options.dataToSave
+                 : options?.useDefaults
+                   ? defaultTranslations.en // Use imported defaults if requested
+                   : translations.en;       // Otherwise, use current state
     if (!db) { // db is Firestore instance
       setSaveStatus("Error: Firestore connection failed.");
       return;

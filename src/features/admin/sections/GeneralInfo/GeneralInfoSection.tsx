@@ -79,70 +79,101 @@ const GeneralInfoSection: React.FC<GeneralInfoSectionProps> = ({
   getStaticSectionName,
 }) => {
   // Extract data for easier access
-  const generalInfoData = translations.en.generalInfo;
   const aboutData = translations.en.about;
+  const heroData = translations.en.hero; // Add hero data
+  const footerData = translations.en.footer; // Add footer data
 
   return (
     // Use CSS Grid: 1 column by default, 2 columns on medium screens and up
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 
-      {/* General Info Section Column */}
-      <div className="space-y-4"> {/* Vertical spacing between elements in this column */}
-        {generalInfoData ? (
-          // Iterate over generalInfoData entries and render an EditableField for each string value
-          Object.entries(generalInfoData).map(([key, value]) => {
-            if (typeof value === 'string') {
-              return (
-                <EditableField
-                  key={key}
-                  fieldKey={key}
-                  value={value}
-                  path={['generalInfo', key]} // Construct the path for state updates
-                  handleChange={handleInputChange}
-                  editingPath={editingPath}
-                  setEditingPath={setEditingPath}
-                />
-              );
-            }
-            // Add handling for other data types (objects, arrays) within generalInfo if needed in the future
-            return null;
-          })
-        ) : (
-          // Display a message if data is missing
-          <p className="text-gray-500 italic">General Info data not available.</p>
-        )}
+      {/* Column 1: Hero */}
+      <div className="space-y-6"> {/* Increased spacing for sections */}
+        {/* Hero Section */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-gray-800 capitalize border-b border-gray-300 pb-2 mb-4">
+            {getStaticSectionName('hero')}
+          </h3>
+          {heroData ? (
+            Object.entries(heroData).map(([key, value]) => {
+              if (typeof value === 'string') {
+                return (
+                  <EditableField
+                    key={`hero-${key}`} // Ensure unique key
+                    fieldKey={key}
+                    value={value}
+                    path={['hero', key]} // Construct the path for state updates
+                    handleChange={handleInputChange}
+                    editingPath={editingPath}
+                    setEditingPath={setEditingPath}
+                  />
+                );
+              }
+              return null;
+            })
+          ) : (
+            <p className="text-gray-500 italic">Hero section data not available.</p>
+          )}
+        </div>
       </div>
 
-      {/* About Section Column */}
-      <div className="space-y-4"> {/* Vertical spacing between elements in this column */}
-         <h3 className="text-xl font-semibold text-gray-800 capitalize border-b border-gray-300 pb-2 mb-4">
-           {getStaticSectionName('about')}
-         </h3>
+      {/* Column 2: About & Footer */}
+      <div className="space-y-6"> {/* Increased spacing for sections */}
+        {/* About Section */}
+        <div className="space-y-4"> {/* Vertical spacing between elements in this column */}
+          <h3 className="text-xl font-semibold text-gray-800 capitalize border-b border-gray-300 pb-2 mb-4">
+            {getStaticSectionName('about')}
+          </h3>
         {aboutData ? (
           // Iterate over aboutData entries and render an EditableField for each string value
           Object.entries(aboutData).map(([key, value]) => {
-            if (typeof value === 'string') {
-              return (
-                <EditableField
-                  key={key}
-                  fieldKey={key}
-                  value={value}
-                  path={['about', key]} // Construct the path for state updates
-                  handleChange={handleInputChange}
-                  editingPath={editingPath}
-                  setEditingPath={setEditingPath}
-                />
-              );
-            }
-             // Add handling for other data types (objects, arrays) within about if needed in the future
-            return null;
-          })
-        ) : (
-           // Display a message if data is missing
-          <p className="text-gray-500 italic">About section data not available.</p>
-        )}
-      </div>
+              if (typeof value === 'string') {
+                return (
+                  <EditableField
+                    key={`about-${key}`} // Ensure unique key
+                    fieldKey={key}
+                    value={value}
+                    path={['about', key]} // Construct the path for state updates
+                    handleChange={handleInputChange}
+                    editingPath={editingPath}
+                    setEditingPath={setEditingPath}
+                  />
+                );
+              }
+              return null;
+            })
+          ) : (
+            <p className="text-gray-500 italic">About section data not available.</p>
+          )}
+        </div>
 
+        {/* Footer Section */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-gray-800 capitalize border-b border-gray-300 pb-2 mb-4">
+            {getStaticSectionName('footer')}
+          </h3>
+          {footerData ? (
+            Object.entries(footerData).map(([key, value]) => {
+              if (typeof value === 'string') {
+                return (
+                  <EditableField
+                    key={`footer-${key}`} // Ensure unique key
+                    fieldKey={key}
+                    value={value}
+                    path={['footer', key]} // Construct the path for state updates
+                    handleChange={handleInputChange}
+                    editingPath={editingPath}
+                    setEditingPath={setEditingPath}
+                  />
+                );
+              }
+              return null;
+            })
+          ) : (
+            <p className="text-gray-500 italic">Footer section data not available.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

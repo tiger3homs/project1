@@ -9,12 +9,12 @@ import { auth } from '../../../config/firebaseConfig';
 // UI Libraries & Icons
 // UI Libraries & Icons
 import {
-  LayoutDashboard, FileEdit, Palette, Link2, Settings, FileText, Briefcase, // Added Briefcase
+  LayoutDashboard, FileEdit, Link2, Settings, FileText, Briefcase, // Added Briefcase
   Image as ImageIcon
 } from 'lucide-react';
 
 // Context
-import { NotificationProvider } from '../../../contexts/NotificationContext'; // Corrected path
+// NotificationProvider is already wrapping the app in App.tsx
 
 // Common Components
 
@@ -43,7 +43,6 @@ const navItems = [
   { icon: <FileEdit size={20} />, label: 'Projects', tab: 'projects' },
   { icon: <Briefcase size={20} />, label: 'Services', tab: 'services' }, // Added Services section
   { icon: <ImageIcon size={20} />, label: 'Media', tab: 'media' }, // Use the alias ImageIcon
-  { icon: <Palette size={20} />, label: 'Appearance', tab: 'styleEditor' },
   { icon: <Link2 size={20} />, label: 'Social Links', tab: 'socialLinks' },
   { icon: <Settings size={20} />, label: 'Settings', tab: 'generalInfo' },
 ];
@@ -99,6 +98,35 @@ const AdminDashboard: React.FC = () => {
     // resetToDefaults, // Removed unused variable
   } = useAdminData();
 
+  // --- Temporary Effect to Update Firestore Structure ---
+  // This effect runs once on mount to save the default structure to Firestore.
+  // It should be removed after the first successful run.
+  useEffect(() => {
+    const updateFirestoreStructure = async () => {
+      console.log("Attempting to update Firestore structure with defaults...");
+      // Use a confirmation prompt before overwriting Firestore data
+      if (window.confirm("Update Firestore 'translations/en' document with the current default structure? This will add missing sections like 'hero' and 'footer'. Existing data in those sections will be overwritten if they exist.")) {
+        await saveChanges({ useDefaults: true });
+        alert("Firestore structure update initiated. Check console/toast for status."); // Provide feedback
+      } else {
+        console.log("Firestore structure update cancelled by user.");
+      }
+    };
+    // Check if this update has already been performed (using localStorage flag)
+    const structureUpdated = localStorage.getItem('firestoreStructureUpdated_v1'); // Use a versioned key
+    if (!structureUpdated) {
+      updateFirestoreStructure().then(() => {
+        // Set flag in localStorage after attempting the update
+        localStorage.setItem('firestoreStructureUpdated_v1', 'true');
+      });
+    } else {
+      console.log("Firestore structure update already performed.");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array ensures this runs only once on mount
+  // --- End Temporary Effect ---
+
+
   // Local UI state
   const [activeTab, setActiveTab] = useState<string | null>('dashboard'); // Default to dashboard
   const [editingPath, setEditingPath] = useState<string | null>(null);
@@ -131,10 +159,10 @@ const AdminDashboard: React.FC = () => {
   // Their logic is now handled by TabContentRenderer
 
   return (
-    <NotificationProvider>
-      <div className="min-h-screen bg-gray-100">
-        {/* Use the new TopNavBar component */}
-        <TopNavBar
+    // Removed NotificationProvider wrapper
+    <div className="min-h-screen bg-gray-100">
+      {/* Use the new TopNavBar component */}
+      <TopNavBar
           isMobile={isMobile}
           isSidebarOpen={isSidebarOpen}
           isDesktopSidebarCollapsed={isDesktopSidebarCollapsed}
@@ -215,7 +243,7 @@ const AdminDashboard: React.FC = () => {
       </div>
       {/* ToastNotification and ConfirmationModal are rendered internally by NotificationProvider */}
     </div>
-    </NotificationProvider> // Close NotificationProvider
+    // Removed NotificationProvider wrapper
   );
 };
 
