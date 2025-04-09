@@ -256,6 +256,7 @@ function MainSite() {
                 <li><a href="#services" className="text-gray-400 hover:text-white">{displayData.services?.title}</a></li>
                 <li><a href="#about" className="text-gray-400 hover:text-white">{displayData.about?.title}</a></li>
                 <li><a href="#contact" className="text-gray-400 hover:text-white">{displayData.contact?.title}</a></li>
+                <li><a href="/login" className="text-gray-400 hover:text-white">Login</a></li>
               </ul>
             </div>
             <div>
